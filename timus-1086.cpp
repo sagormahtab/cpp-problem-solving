@@ -2,29 +2,30 @@
 #include <cmath>
 using namespace std;
 int main(){
-  int n,countPrime=1,number,nthPosition,factors = 1;
+  int n,number=0,nthPosition,factors = 1,k=0;
   cin>>n;
+  int primeNumbers[15000];
 
-  for(int i = 0; i < n; i++){
-    cin>>nthPosition;
-    number = 1;
-    while(1){
+  while(1){
       number++;
       for(int j = 1; j <= sqrt(number); j++){
         if(number % j == 0)
           factors++;
       }
-      if(factors == 1)
-        countPrime++;
+      if(factors == 1){
+        primeNumbers[k] = number;
+        k++;
+      }
 
       factors = 0;
 
-      if(countPrime == nthPosition)
+      if(number > 163841)
         break;
     }
-    cout<<number<<endl;
-    countPrime = 1;
-    factors = 1;
+
+  for(int i = 0; i < n; i++){
+    cin>>nthPosition;
+    cout<<primeNumbers[nthPosition-1]<<endl;
   }
   return 0;
 }
