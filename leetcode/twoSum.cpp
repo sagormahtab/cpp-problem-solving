@@ -2,44 +2,59 @@
 #include <iterator>
 #include <cstring>
 #include <vector>
+#include <sstream>
+
 using namespace std;
 
-int main()
+vector<int> twoSum(vector<int> &nums, int target)
 {
-  vector<int> ar = {2, 7, 11, 15};
-  int target = 9;
   vector<int>::iterator ptr, ptr2;
-  // char openingThirdBracket[50] = "[";
-  // char closingThirdBracket[50] = "]";
-  // char comma[50] = ",";
+  vector<int> result;
 
-  for (ptr = ar.begin(); ptr < ar.end(); ptr++)
+  for (ptr = nums.begin(); ptr < nums.end(); ptr++)
   {
-    bool isFound = false;
-    for (ptr2 = ar.begin(); ptr2 < ar.end(); ptr2++)
+    for (ptr2 = nums.begin(); ptr2 < nums.end(); ptr2++)
     {
-      int index1 = ptr - ar.begin();
-      int index2 = ptr2 - ar.begin();
-      int addition = ar[index1] + ar[index2];
+      if (ptr == ptr2)
+      {
+        continue;
+      }
 
-      // string indexStr1 = to_string(index1);
-      // string indexStr2 = to_string(index2);
+      int index1 = ptr - nums.begin();
+      int index2 = ptr2 - nums.begin();
+      int addition = nums[index1] + nums[index2];
 
       if (addition == target)
       {
-        isFound = true;
-        // strcat(openingThirdBracket, indexStr1, comma, indexStr2, closingThirdBracket);
-        // string result = openingThirdBracket + index1 + comma + index2 + closingThirdBracket;
-        // string result = "[" + index1 + index2 + "]";
-        cout << result;
-        break;
+        // HIGHLIGHT: technique for string concatenation
+        // stringstream ss;
+        // ss << "[" << index1 << "," << index2 << "]";
+        // string result = ss.str();
+
+        result.push_back(index1);
+        result.push_back(index2);
+
+        return result;
       }
     }
-
-    if (isFound == true)
-    {
-      break;
-    }
   }
+
+  return result;
+}
+
+int main()
+{
+  vector<int> ar = {3, 2, 4};
+  int target = 6;
+
+  vector<int> result = twoSum(ar, target);
+
+  // HIGHLIGHT: converting int vector to string
+  stringstream ss;
+  copy(result.begin(), result.end(), ostream_iterator<int>(ss, ","));
+  string s = ss.str();
+  s = s.substr(0, s.length() - 1); // get rid of the trailing space
+
+  cout << "[" << s << "]";
   return 0;
 }
