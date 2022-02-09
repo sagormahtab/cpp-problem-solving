@@ -15,11 +15,6 @@ vector<int> twoSum(vector<int> &nums, int target)
 
   for (size_t i = 0; i < nums.size(); i++)
   {
-    hashMap.insert(make_pair(nums[i], i));
-  }
-
-  for (size_t i = 0; i < nums.size(); i++)
-  {
     int complement = target - nums[i];
     if (hashMap.find(complement) != hashMap.end() && hashMap.find(complement)->second != i)
     {
@@ -27,6 +22,7 @@ vector<int> twoSum(vector<int> &nums, int target)
       result.push_back(hashMap.find(complement)->second);
       return result;
     }
+    hashMap.insert(make_pair(nums[i], i));
   }
 
   return result;
