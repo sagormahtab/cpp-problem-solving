@@ -3,39 +3,29 @@
 #include <cstring>
 #include <vector>
 #include <sstream>
+#include <unordered_map>
+#include <utility>
 
 using namespace std;
 
 vector<int> twoSum(vector<int> &nums, int target)
 {
-  vector<int>::iterator ptr, ptr2;
+  unordered_map<int, int> hashMap;
   vector<int> result;
 
-  for (ptr = nums.begin(); ptr < nums.end(); ptr++)
+  for (size_t i = 0; i < nums.size(); i++)
   {
-    for (ptr2 = nums.begin(); ptr2 < nums.end(); ptr2++)
+    hashMap.insert(make_pair(nums[i], i));
+  }
+
+  for (size_t i = 0; i < nums.size(); i++)
+  {
+    int complement = target - nums[i];
+    if (hashMap.find(complement) != hashMap.end() && hashMap.find(complement)->second != i)
     {
-      if (ptr == ptr2)
-      {
-        continue;
-      }
-
-      int index1 = ptr - nums.begin();
-      int index2 = ptr2 - nums.begin();
-      int addition = nums[index1] + nums[index2];
-
-      if (addition == target)
-      {
-        // HIGHLIGHT: technique for string concatenation
-        // stringstream ss;
-        // ss << "[" << index1 << "," << index2 << "]";
-        // string result = ss.str();
-
-        result.push_back(index1);
-        result.push_back(index2);
-
-        return result;
-      }
+      result.push_back(i);
+      result.push_back(hashMap.find(complement)->second);
+      return result;
     }
   }
 
