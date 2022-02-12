@@ -15,7 +15,8 @@ typedef struct ListNode
 
 ListNode *addTwoNumbers(ListNode *l1, ListNode *l2)
 {
-  int i = 0, sum = 0, unit = 1;
+  long long sum = 0;
+  int unit = 1;
   // copy of the initial pointer so that the linked list is not destroyed
   ListNode *p = l1;
   ListNode *q = l2;
@@ -28,21 +29,23 @@ ListNode *addTwoNumbers(ListNode *l1, ListNode *l2)
     int localSum = 0;
     if (p == NULL) {
       localSum += q->val;
+      q = q -> next;
     } else if (q == NULL) {
       localSum += p->val;
+      p = p -> next;
     } else {
       localSum += p->val + q->val;
+      p = p->next;
+      q = q->next;
     }
 
     sum = sum + localSum * unit;
-
-    p = p->next;
-    q = q->next;
     unit *= 10;
   }
 
   string sumStr = to_string(sum);
-  for(int i = sumStr.length() - 1, j = 0; i > -1; i--, j++) {
+  // assigning the reverse string to a new linked list
+  for(int i = sumStr.length() - 1; i > -1; i--) {
     // converting character to integer
     l3 -> val = sumStr[i] - 48;
     if (i == 0) {
@@ -59,8 +62,8 @@ ListNode *addTwoNumbers(ListNode *l1, ListNode *l2)
 
 int main()
 {
-  vector<int> list1 {2, 4, 3};
-  vector<int> list2 {5, 6, 4};
+  vector<int> list1 {9};
+  vector<int> list2 {1,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9};
 
   // Generating l1 linked list
   ListNode *l1 = new ListNode;
