@@ -42,10 +42,9 @@ ListNode *addTwoNumbers(ListNode *l1, ListNode *l2)
     q = q->next;
     unit *= 10;
   }
-  cout << sum;
 
-  // string sumStr = to_string(sum);
-  // cout << "bruh" << sumStr << endl;
+  string sumStr = to_string(sum);
+  cout << sumStr << endl;
   //   for(int i = sumStr.length(), j = 0; i > -1; i--, j++) {
   //     (l3 + j) -> val = (int) sumStr[i];
   //     if (i == 0) {
