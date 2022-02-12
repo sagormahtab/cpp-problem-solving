@@ -1,5 +1,7 @@
 #include <iostream>
 #include <iomanip>
+#include <string>
+#include <vector>
 using namespace std;
 
 typedef struct ListNode
@@ -24,18 +26,14 @@ ListNode *addTwoNumbers(ListNode *l1, ListNode *l2)
   while (p != NULL || q != NULL)
   {
     int localSum = 0;
-    if (p == NULL)
-    {
+    if (p == NULL) {
       localSum += q->val;
-    }
-
-    if (q == NULL)
-    {
+    } else if (q == NULL) {
       localSum += p->val;
+    } else {
+      localSum += p->val + q->val;
     }
-    localSum += p->val + q->val;
 
-    cout << p->val << setw(5) << q->val << setw(5) << localSum << endl;
     sum = sum + localSum * unit;
 
     p = p->next;
@@ -44,69 +42,60 @@ ListNode *addTwoNumbers(ListNode *l1, ListNode *l2)
   }
 
   string sumStr = to_string(sum);
-  cout << sumStr << endl;
-  //   for(int i = sumStr.length(), j = 0; i > -1; i--, j++) {
-  //     (l3 + j) -> val = (int) sumStr[i];
-  //     if (i == 0) {
-  //       (l3 + j) -> next = NULL;
-  //     } else {
-  //       (l3 + j) -> next = (l3 + j + 1);
-  //     }
-  //   }
-  // cout << l3 -> val;
-  //   while (l3 != NULL) {
-  //     cout << l3 -> val;
-  //     l3 = l3 -> next;
-  //   }
-  return l1;
+  for(int i = sumStr.length() - 1, j = 0; i > -1; i--, j++) {
+    // converting character to integer
+    l3 -> val = sumStr[i] - 48;
+    if (i == 0) {
+      l3 -> next = NULL;
+      break;
+    } else {
+      l3 -> next = new ListNode(sumStr[i] - 48);
+      l3 = l3 -> next;
+    }
+  }
+
+  return head;
 };
 
 int main()
 {
-  // Defining Head
-  ListNode *l1Head;
-  ListNode *l2Head;
+  vector<int> list1 {2, 4, 3};
+  vector<int> list2 {5, 6, 4};
 
-  // Initializing nodes with NULL
-  ListNode *l1One = NULL;
-  ListNode *l1Two = NULL;
-  ListNode *l1Three = NULL;
+  // Generating l1 linked list
+  ListNode *l1 = new ListNode;
+  ListNode *l1Head = l1;
+  ListNode *p = l1Head;
 
-  ListNode *l2One = NULL;
-  ListNode *l2Two = NULL;
-  ListNode *l2Three = NULL;
+  for (int i = 0; i < list1.size(); i++) {
+    p -> val = list1[i];
+    if (i == list1.size() - 1) {
+      p -> next = NULL;
+      break;
+    }
+    p -> next = new ListNode(list1[i + 1]);
+    p = p -> next;
+  }
 
-  // allocate nodes in the heap
-  l1One = new ListNode;
-  l1Two = new ListNode;
-  l1Three = new ListNode;
+  // Generating l2 linked list
+  ListNode *l2 = new ListNode;
+  ListNode *l2Head = l2;
+  ListNode *q = l2Head;
 
-  l2One = new ListNode;
-  l2Two = new ListNode;
-  l2Three = new ListNode;
-
-  // Assign val values
-  l1One->val = 2;
-  l1Two->val = 4;
-  l1Three->val = 3;
-
-  l2One->val = 5;
-  l2Two->val = 6;
-  l2Three->val = 4;
-
-  // Connect Nodes
-  l1One->next = l1Two;
-  l1Two->next = l1Three;
-  l1Three->next = NULL;
-
-  l2One->next = l2Two;
-  l2Two->next = l2Three;
-  l2Three->next = NULL;
-
-  // Connect with head
-  l1Head = l1One;
-  l2Head = l2One;
+  for (int i = 0; i < list2.size(); i++) {
+    q -> val = list2[i];
+    if (i == list2.size() - 1) {
+      q -> next = NULL;
+      break;
+    }
+    q -> next = new ListNode(list2[i + 1]);
+    q = q -> next;
+  }
 
   ListNode *result = addTwoNumbers(l1Head, l2Head);
+  while (result != NULL) {
+    cout << result -> val;
+    result = result -> next;
+  }
   return 0;
 }
