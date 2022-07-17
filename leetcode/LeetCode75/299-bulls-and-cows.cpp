@@ -2,6 +2,18 @@
 #include <vector>
 using namespace std;
 
+// SINGLE PASS
+// for (int i = 0; i < secret.size(); i++)
+// {
+//   int s = secret[i] - '0';
+//   int g = guess[i] - '0';
+//   if (s == g) bulls++;
+//   else  {
+//     if(stat[s]++ < 0) cows++;
+//     if(stat[g]-- > 0) cows++;
+//   }
+// }
+
 string getHint(string secret, string guess)
 {
   string result;
