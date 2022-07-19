@@ -13,45 +13,33 @@ struct ListNode
 
 ListNode *mergeTwoLists(ListNode *list1, ListNode *list2)
 {
-  if (list1 == NULL)
-  {
-    return list2;
-  }
-  if (list2 == NULL)
-  {
-    return list1;
-  }
   ListNode *p1 = list1;
   ListNode *p2 = list2;
-  ListNode *list3 = new ListNode;
-  ListNode *head = list3;
-  while (p1 != NULL || p2 != NULL)
+  ListNode *dummy = new ListNode;
+  ListNode *head = dummy;
+
+  while (p1 != NULL && p2 != NULL)
   {
-    if (p1 == NULL || p1->val > p2->val)
+    if (p1->val < p2->val)
     {
-      head->val = p2->val;
-      p2 = p2->next;
+      dummy->next = p1;
+      p1 = p1->next;
     }
     else
     {
-      head->val = p1->val;
-      p1 = p1->next;
+      dummy->next = p2;
+      p2 = p2->next;
     }
-
-    if (p1 == NULL && p2 == NULL)
-    {
-      head->next = nullptr;
-      head = head->next;
-      break;
-    }
-
-    head->next = new ListNode;
-    head = head->next;
+    dummy = dummy->next;
   }
 
-  // This is not possible we can assing NULL only to the ptr -> next
-  // head = nullptr or NULL
-  return list3;
+  if (p1 != NULL)
+    dummy->next = p1;
+
+  if (p2 != NULL)
+    dummy->next = p2;
+
+  return head->next;
 }
 
 int main()
